@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Doctor Dashboard</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #eeeeee;
+        }
+
+        .emergency {
+            font-weight: bold;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🏥 HOSPITAL QUEUE</h1>
+
+    <h2>Doctor Dashboard</h2>
+
+    {% if patients %}
+
+    <table>
+
+        <tr>
+
+            <th>Queue Position</th>
+            <th>Token</th>
+            <th>Patient</th>
+            <th>Department</th>
+            <th>Priority</th>
+            <th>Waiting Time</th>
+            <th>Action</th>
+
+        </tr>
+
+        {% for patient in patients %}
+
+        <tr>
+
+            <td>
+                {{ loop.index }}
+            </td>
+
+            <td>
+                {{ patient["token_number"] }}
+            </td>
+
+            <td>
+                {{ patient["name"] }}
+            </td>
+
+            <td>
+                {{ patient["department"] }}
+            </td>
+
+            <td>
+
+                {% if patient["priority"] == 1 %}
+                    Emergency
+                {% elif patient["priority"] == 2 %}
+                    Urgent
+                {% else %}
+                    Normal
+                {% endif %}
+
+            </td>
+
+            <td>
+                {{ patient["waiting_time"] }} minutes
+            </td>
+
+            <td>
+
+                <button>
+                    Call
+                </button>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+        <h3>No patients are currently waiting.</h3>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>
